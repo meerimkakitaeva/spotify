@@ -1,16 +1,35 @@
 import express from "express";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
-import {IAlbum, IAlbumMutation} from "../types";
+import {IAlbumMutation} from "../types";
 import Album from "../models/Album";
 
 const albumsRoutes = express.Router();
 
 albumsRoutes.get('/', async (req, res) => {
     try {
-        const albums: IAlbum[] = await Album.find().populate('artist');
-        res.send(albums);
+        if (req.query.artist) {
+            const artist = await Album.find({ artist: req.query.artist }).populate('artist');
+            res.send(artist);
+        } else {
+            const albums = await Album.find().populate('artist');
+            res.send(albums);
+        }
     } catch (e) {
+        return res.status(500).send(e);
+    }
+});
+
+albumsRoutes.get('/:id', async (req, res) => {
+    try {
+        const album = await Album.findById(req.params.id).populate('artist');
+
+        if (!album) {
+            return res.sendStatus(404);
+        }
+
+        return res.send(album);
+    } catch {
         return res.sendStatus(500);
     }
 });

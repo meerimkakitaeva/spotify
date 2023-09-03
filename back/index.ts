@@ -16,7 +16,7 @@ app.use('/albums', albumsRoutes);
 app.use('/tracks', tracksRoutes);
 
 const run = async () => {
-    await mongoose.connect('mongodb://127.0.0.1:27017/spotify');
+    await mongoose.connect('mongodb://localhost/spotify');
 
     app.listen(port, () => {
         console.log(`Server started on ${port} port!`);

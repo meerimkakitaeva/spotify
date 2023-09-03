@@ -7,8 +7,13 @@ const tracksRoutes = express.Router();
 
 tracksRoutes.get('/', async (req, res) => {
     try {
-        const tracks: ITrack[] = await Track.find().populate('album');
-        res.send(tracks);
+        if (req.query.album) {
+            const album = await Track.find({album: req.query.album}).populate('album');
+            res.send(album);
+        } else {
+            const tracks: ITrack[] = await Track.find().populate('album');
+            res.send(tracks);
+        }
     } catch (e) {
         return res.sendStatus(500);
     }
