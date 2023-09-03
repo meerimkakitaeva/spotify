@@ -25,3 +25,16 @@ export interface IAlbumMutation {
     releaseDate: string,
     image?: string | null,
 }
+
+export interface ITrack {
+    id: string,
+    name: string,
+    album: string,
+    duration: string,
+}
+
+export interface ITrackMutation {
+    name: string,
+    album: string,
+    duration: string,
+}

@@ -3,6 +3,7 @@ import cors from 'cors';
 import * as mongoose from "mongoose";
 import artistsRoutes from "./routers/artists";
 import albumsRoutes from "./routers/album";
+import tracksRoutes from "./routers/tracks";
 
 const app = express();
 const port = 8000;
@@ -12,6 +13,7 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use('/artists', artistsRoutes);
 app.use('/albums', albumsRoutes);
+app.use('/tracks', tracksRoutes);
 
 const run = async () => {
     await mongoose.connect('mongodb://127.0.0.1:27017/spotify');
