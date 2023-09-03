@@ -8,7 +8,7 @@ const albumsRoutes = express.Router();
 
 albumsRoutes.get('/', async (req, res) => {
     try {
-        const albums: IAlbum[] = await Album.find();
+        const albums: IAlbum[] = await Album.find().populate('artist');
         res.send(albums);
     } catch (e) {
         return res.sendStatus(500);

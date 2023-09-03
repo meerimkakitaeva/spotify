@@ -1,14 +1,13 @@
 import express from "express";
-import Artist from "../models/Artist";
 import mongoose from "mongoose";
-import {IArtist, IArtistMutation, ITrack, ITrackMutation} from "../types";
+import {ITrack, ITrackMutation} from "../types";
 import Track from "../models/Track";
 
 const tracksRoutes = express.Router();
 
 tracksRoutes.get('/', async (req, res) => {
     try {
-        const tracks: ITrack[] = await Track.find();
+        const tracks: ITrack[] = await Track.find().populate('album');
         res.send(tracks);
     } catch (e) {
         return res.sendStatus(500);
