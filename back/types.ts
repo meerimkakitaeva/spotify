@@ -38,3 +38,8 @@ export interface ITrackMutation {
     album: string,
     duration: string,
 }
+
+export interface IUser {
+    username: string,
+    password: string,
+}
