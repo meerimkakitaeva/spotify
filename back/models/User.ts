@@ -1,11 +1,13 @@
-import {Model, model, Schema} from "mongoose";
+import mongoose, {Model, Schema} from "mongoose";
 import {IUser} from "../types";
 import bcrypt from "bcrypt";
+import {randomUUID} from "crypto";
 
 const SALT_WORK_FACTOR = 10;
 
 interface IUserMethods {
     checkPassword(password: string): Promise<boolean>;
+    generateToken(): void;
 }
 
 type UserModel = Model<IUser, {}, IUserMethods>;
@@ -17,6 +19,10 @@ const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
         unique: true,
     },
     password: {
+        type: String,
+        required: true,
+    },
+    token: {
         type: String,
         required: true,
     }
@@ -43,6 +49,10 @@ UserSchema.methods.checkPassword = function (password) {
     return bcrypt.compare(password, this.password);
 }
 
-const User = model<IUser, UserModel>('User', UserSchema);
+UserSchema.methods.generateToken = function () {
+    this.token = randomUUID();
+}
+
+const User = mongoose.model<IUser, UserModel>('User', UserSchema);
 
 export default User;

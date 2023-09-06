@@ -1,7 +1,6 @@
 import express from "express";
 import User from "../models/User";
 import mongoose from "mongoose";
-import bcrypt from "bcrypt";
 
 const usersRouter = express.Router();
 
@@ -11,6 +10,8 @@ usersRouter.post('/', async (req, res, next) => {
            username: req.body.username,
            password: req.body.password,
        });
+
+       user.generateToken();
 
        await user.save();
        return res.send(user);
@@ -24,18 +25,28 @@ usersRouter.post('/', async (req, res, next) => {
 });
 
 usersRouter.post('/sessions', async (req, res, next) => {
-    const user = await User.findOne({ username: req.body.username });
+    try {
+        const user = await User.findOne({ username: req.body.username });
 
-    if (!user) {
-        return res.status(401).send({error: 'Wrong password or username! [Username]!'});
+        if (!user) {
+            return res.status(400).send({error: 'Wrong password or username! [Username]!'});
+        }
+
+        const isMatch = await user.checkPassword(req.body.password);
+
+        if (!isMatch) {
+            return res.status(400).send({error: 'Wrong password or username! [Password]'});
+        }
+
+        user.generateToken();
+        await user.save();
+
+        res.send({message: 'Username and password correct', user});
+    } catch (e) {
+        next(e);
     }
 
-    const isMatch = await user.checkPassword(req.body.password);
-
-    if (!isMatch) {
-        return res.status(401).send({error: 'Wrong password or username! [Password]'});
-    }
-
-    res.send({message: 'Username and password correct'});
 });
+
+
 export default usersRouter;
