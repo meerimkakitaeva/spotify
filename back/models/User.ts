@@ -1,10 +1,16 @@
-import {model, Schema} from "mongoose";
+import {Model, model, Schema} from "mongoose";
 import {IUser} from "../types";
 import bcrypt from "bcrypt";
 
 const SALT_WORK_FACTOR = 10;
 
-const UserSchema = new Schema<IUser>({
+interface IUserMethods {
+    checkPassword(password: string): Promise<boolean>;
+}
+
+type UserModel = Model<IUser, {}, IUserMethods>;
+
+const UserSchema = new Schema<IUser, UserModel, IUserMethods>({
     username: {
         type: String,
         required: true,
@@ -33,6 +39,10 @@ UserSchema.set('toJSON', {
    }
 });
 
-const User = model('User', UserSchema);
+UserSchema.methods.checkPassword = function (password) {
+    return bcrypt.compare(password, this.password);
+}
+
+const User = model<IUser, UserModel>('User', UserSchema);
 
 export default User;
