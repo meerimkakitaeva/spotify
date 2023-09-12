@@ -17,6 +17,10 @@ const TrackSchema = new Schema({
             message: "Album does not exist"
         },
     },
+    trackNumber: {
+        type: String,
+        required: true,
+    },
     duration : {
         type: String,
         required: true,
