@@ -1,10 +1,11 @@
 import express from "express";
 import User from "../models/User";
 import mongoose from "mongoose";
+import auth from "../middleware/auth";
 
 const usersRouter = express.Router();
 
-usersRouter.post('/', async (req, res, next) => {
+usersRouter.post('/',  async (req, res, next) => {
    try {
        const user = new User({
            username: req.body.username,
@@ -24,7 +25,7 @@ usersRouter.post('/', async (req, res, next) => {
    }
 });
 
-usersRouter.post('/sessions', async (req, res, next) => {
+usersRouter.post('/sessions', auth, async (req, res, next) => {
     try {
         const user = await User.findOne({ username: req.body.username });
 

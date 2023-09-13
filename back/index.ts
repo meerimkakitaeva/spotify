@@ -20,7 +20,7 @@ app.use('/users', usersRouter);
 app.use('/track_history', tracksHistoryRouter);
 
 const run = async () => {
-    await mongoose.connect('mongodb://localhost/spotify');
+    await mongoose.connect('mongodb://127.0.0.1:27017/spotify');
 
     app.listen(port, () => {
         console.log(`Server started on ${port} port!`);
