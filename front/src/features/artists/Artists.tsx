@@ -17,8 +17,8 @@ const Artists = () => {
         const newArtists = [...items].reverse();
         artists = newArtists.map((item) => (
             <ArtistItem
-                key={item.id}
-                _id={item.id}
+                _id={item._id}
+                key={item._id}
                 name={item.name}
                 image={item.image}
             />
