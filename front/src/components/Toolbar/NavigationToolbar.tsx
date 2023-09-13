@@ -15,7 +15,7 @@ const NavigationToolbar = () => {
         <AppBar position="sticky" sx={{mb: 5}}>
             <Toolbar >
                 <Typography variant="h5" component="div" sx={{flexGrow: 1}}>
-                    <Link to="/">Albums</Link>
+                    <Link to="/">Artists</Link>
                 </Typography>
             </Toolbar>
         </AppBar>

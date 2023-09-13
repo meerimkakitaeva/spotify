@@ -25,7 +25,7 @@ const run = async () => {
   }, {
     name: 'Ariana Grande',
     description: 'The most popular female singer',
-    image: 'fixture/Grande.jpg'
+    image: 'fixtures/Grande.jpg'
   });
 
   const [first, second, third, fourth] = await Album.create({
