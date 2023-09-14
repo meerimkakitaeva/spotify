@@ -24,6 +24,7 @@ const Tracks = () => {
         tracks = newTracks.map((item) => (
             <TrackItem
                 _id={item._id}
+                key={item._id}
                 name={item.name}
                 album={item.album}
                 duration={item.duration}
@@ -40,7 +41,7 @@ const Tracks = () => {
         <Container maxWidth="md">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
-                    <Typography variant="h6" sx={{mb:3, mt: 2}} textAlign="center">
+                    <Typography variant="h6" sx={{mb: 3, mt: 2}} textAlign="center">
                         Artist : {artistName}
                     </Typography>
                     <div style={{display: "flex", flexWrap: "wrap", flexDirection: "row", justifyContent: "center"}}>
