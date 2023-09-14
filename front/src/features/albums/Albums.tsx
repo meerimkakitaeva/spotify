@@ -2,42 +2,46 @@ import React, {useEffect} from 'react';
 import {Container, Grid, Typography} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import CircularProgress from '@mui/material/CircularProgress';
-import {selectArtists, selectArtistsLoading} from "./artistsSlice";
-import ArtistItem from "./components/ArtistItem";
-import {fetchArtists} from "./artistsThunk";
+import {selectAlbums, selectAlbumsLoading} from "./albumsSlice";
+import AlbumItem from "./components/AlbumItem";
+import {fetchAlbums} from "./albumsThunk";
+import {useParams} from "react-router";
 
-const Artists = () => {
+const Albums = () => {
+    const { artistId } = useParams() as { artistId: string };
+
     const dispatch = useAppDispatch();
-    const items = useAppSelector(selectArtists);
-    const fetchLoading = useAppSelector(selectArtistsLoading);
+    const items = useAppSelector(selectAlbums);
+    const fetchLoading = useAppSelector(selectAlbumsLoading);
 
-    let artists: React.ReactNode = <CircularProgress />;
+    let albums: React.ReactNode = <CircularProgress />;
 
     if (!fetchLoading) {
-        const newArtists = [...items].reverse();
-        artists = newArtists.map((item) => (
-            <ArtistItem
+        const newAlbums = [...items].reverse();
+        albums = newAlbums.map((item) => (
+            <AlbumItem
                 _id={item._id}
                 key={item._id}
                 name={item.name}
+                releaseDate={item.releaseDate}
                 image={item.image}
             />
         ));
     }
 
     useEffect(() => {
-        dispatch(fetchArtists());
-    }, [dispatch]);
+        dispatch(fetchAlbums(artistId));
+    }, [dispatch, artistId]);
 
     return (
         <Container maxWidth="md">
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Typography variant="h6" sx={{mb:3, mt: 2}} textAlign="center">
-                        Artists :
+                        ALbums  :
                     </Typography>
                     <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                        {artists}
+                        {albums}
                     </div>
                 </Grid>
             </Grid>
@@ -45,4 +49,4 @@ const Artists = () => {
     );
 };
 
-export default Artists;
+export default Albums;

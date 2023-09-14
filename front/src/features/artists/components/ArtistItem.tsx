@@ -18,27 +18,32 @@ const ArtistItem: React.FC<Props> = ({_id, image, name}) => {
     const artistImage = image ? `http://localhost:8000/${image}` : '';
 
     return (
-        <Card sx={{mb: 3}}>
+        <Card sx={{ mb: 3, maxWidth: 300, m: 3, position: 'relative' }}>
             <CardActionArea>
                 <CardContent>
                     <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <Typography gutterBottom component="div" sx={{ fontSize: '20px' }}>
+                                {name} ...
+                            </Typography>
+                        </Grid>
                         {artistImage && (
                             <Grid item xs={12} sm={4}>
                                 <CardMedia
                                     component="img"
                                     image={artistImage}
-                                    sx={{width: '200px', height: '150px'}}
+                                    sx={{ width: '200px', height: '150px' }}
                                 />
                             </Grid>
                         )}
-                        <Grid item xs={12} sm={artistImage ? 8 : 12}>
-                            <Typography gutterBottom component="div" sx={{fontSize: '20px'}}>
-                                {name} ...
-                            </Typography>
-                        </Grid>
                         <Grid item xs={12}>
-                            <Button component={Link} to={'/albums?artist=' + _id} onClick={() => dispatch(fetchAlbums(_id))}>
-                                <ArrowCircleRightOutlinedIcon/>
+                            <Button
+                                component={Link}
+                                to={`/albums/${_id}`}
+                                onClick={() => dispatch(fetchAlbums(_id))}
+                                style={{ position: 'absolute', bottom: 0, right: 0 }}
+                            >
+                                <ArrowCircleRightOutlinedIcon />
                             </Button>
                         </Grid>
                     </Grid>
