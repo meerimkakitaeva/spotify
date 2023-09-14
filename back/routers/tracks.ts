@@ -24,6 +24,7 @@ tracksRoutes.post('/', async (req, res, next) => {
         name: req.body.name,
         album: req.body.album,
         duration: req.body.duration,
+        trackNumber: req.body.trackNumber
     };
 
     const track = new Track(trackData);
