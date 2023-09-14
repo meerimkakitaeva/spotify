@@ -1,6 +1,9 @@
 import React from 'react';
 import {Button, Card, CardActionArea, CardContent, CardMedia, Typography} from "@mui/material";
 import ArrowCircleRightOutlinedIcon from '@mui/icons-material/ArrowCircleRightOutlined';
+import {Link} from "react-router-dom";
+import {fetchTracks} from "../../tracks/tracksThunk";
+import {useAppDispatch} from "../../../app/hooks";
 
 interface Props {
     _id: string,
@@ -10,6 +13,7 @@ interface Props {
 }
 
 const AlbumItem: React.FC<Props> = ({ _id, image, releaseDate, name }) => {
+    const dispatch = useAppDispatch();
     const albumImage = image ? `http://localhost:8000/${image}` : '';
 
     return (
@@ -18,7 +22,7 @@ const AlbumItem: React.FC<Props> = ({ _id, image, releaseDate, name }) => {
                 <CardMedia component="img" image={albumImage} alt={name} />
                 <CardContent>
                     <Typography variant="h6" gutterBottom>
-                        {name} ...
+                        {name}
                     </Typography>
                     <Typography color="textSecondary" variant="body2">
                         {releaseDate}
@@ -27,6 +31,9 @@ const AlbumItem: React.FC<Props> = ({ _id, image, releaseDate, name }) => {
             </CardActionArea>
             <Button
                 style={{ position: "absolute", bottom: 0, right: 0 }}
+                component={Link}
+                to={`/tracks/${_id}`}
+                onClick={() => dispatch(fetchTracks(_id))}
                 endIcon={<ArrowCircleRightOutlinedIcon />}
             />
         </Card>
