@@ -6,11 +6,13 @@ import {RootState} from "../../app/store";
 interface AlbumsState {
     albums: IAlbum[];
     fetchLoading: boolean;
+    artistName: string;
 }
 
 const initialState: AlbumsState = {
     albums: [],
     fetchLoading: false,
+    artistName: '',
 }
 
 export const albumsSlice = createSlice({
@@ -24,6 +26,7 @@ export const albumsSlice = createSlice({
         builder.addCase(fetchAlbums.fulfilled, (state, action) => {
             state.fetchLoading = false;
             state.albums = action.payload;
+            state.artistName = action.payload[0].artist.name;
         });
         builder.addCase(fetchAlbums.rejected, (state) => {
             state.fetchLoading = true;
@@ -35,3 +38,4 @@ export const albumsSlice = createSlice({
 export const albumsReducer = albumsSlice.reducer;
 export const selectAlbums = (state: RootState) => state.albums.albums;
 export const selectAlbumsLoading = (state: RootState) => state.albums.fetchLoading;
+export const selectArtistName = (state: RootState) => state.albums.artistName;
