@@ -14,7 +14,7 @@ const Artists = () => {
     let artists: React.ReactNode = <CircularProgress />;
 
     if (!fetchLoading) {
-        const newArtists = [...items].reverse();
+        const newArtists = [...items];
         artists = newArtists.map((item) => (
             <ArtistItem
                 _id={item._id}
@@ -36,7 +36,7 @@ const Artists = () => {
                     <Typography variant="h6" sx={{mb:3, mt: 2}} textAlign="center">
                         Artists :
                     </Typography>
-                    <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                    <div style={{display: "flex",flexWrap: "wrap", flexDirection: "row", justifyContent: "center"}}>
                         {artists}
                     </div>
                 </Grid>

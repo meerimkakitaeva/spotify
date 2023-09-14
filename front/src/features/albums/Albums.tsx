@@ -17,7 +17,7 @@ const Albums = () => {
     let albums: React.ReactNode = <CircularProgress />;
 
     if (!fetchLoading) {
-        const newAlbums = [...items].reverse();
+        const newAlbums = [...items];
         albums = newAlbums.map((item) => (
             <AlbumItem
                 _id={item._id}
@@ -38,9 +38,9 @@ const Albums = () => {
             <Grid container spacing={2}>
                 <Grid item xs={12}>
                     <Typography variant="h6" sx={{mb:3, mt: 2}} textAlign="center">
-                        ALbums  :
+                        Albums  :
                     </Typography>
-                    <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                    <div style={{display: "flex",flexWrap: "wrap", flexDirection: "row", justifyContent: "center"}}>
                         {albums}
                     </div>
                 </Grid>
