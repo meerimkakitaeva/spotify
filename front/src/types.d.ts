@@ -46,3 +46,30 @@ export interface ITrack {
     trackNumber: string,
 }
 
+export interface RegisterMutation {
+    username: string,
+    password: string,
+}
+
+export interface IUser {
+    _id: string,
+    username: string,
+    password: string,
+}
+
+export interface RegisterResponse {
+    user: IUser;
+    message: string;
+}
+
+export interface ValidationError {
+    errors: {
+        [key: string]: {
+            name: string,
+            message: string,
+        }
+    },
+    message: string,
+    name: string,
+    _message: string,
+}
