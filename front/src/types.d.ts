@@ -55,6 +55,7 @@ export interface IUser {
     _id: string,
     username: string,
     password: string,
+    token?: string,
 }
 
 export interface RegisterResponse {
@@ -82,3 +83,15 @@ export interface LoginMutation {
 export interface GlobalError {
     error: string,
 }
+
+export interface ITrackHistory {
+    user: string,
+    track: string,
+    datetime: Date,
+    _id: string,
+}
+
+export interface ITrackWithId {
+    track: string
+}
+
