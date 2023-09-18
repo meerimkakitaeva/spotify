@@ -22,8 +22,8 @@ const NavigationToolbar = () => {
             <Toolbar >
                 <Typography variant="h5" component="div" sx={{flexGrow: 1}}>
                     <Link to="/">Artists</Link>
+                    {user ? <Link to="/track_history" style={{marginLeft: "10px"}}>History</Link> : ''}
                 </Typography>
-
 
                 {user ? <UserMenu user={user}/> : <AnonymousMenu />}
             </Toolbar>

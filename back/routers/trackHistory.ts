@@ -6,6 +6,20 @@ import auth, {IRequestWithUser} from "../middleware/auth";
 
 const tracksHistoryRouter = express.Router();
 
+tracksHistoryRouter.get('/', auth, async (req, res, next) => {
+    try {
+        const user = (req as IRequestWithUser).user;
+
+        const history = await TrackHistory.find({ user })
+            .populate('track')
+            .sort({ datetime: -1 });
+
+        res.send(history);
+    } catch (e) {
+        next(e);
+    }
+});
+
 tracksHistoryRouter.post('/', auth,  async (req, res, next) => {
     try {
         const trackId = req.body.track;

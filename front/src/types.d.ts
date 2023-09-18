@@ -95,3 +95,16 @@ export interface ITrackWithId {
     track: string
 }
 
+export interface IHistory {
+    _id: string,
+    user: string,
+    track: {
+        _id: string,
+        name: string,
+        album: string,
+        trackNumber: string,
+        duration: string,
+    },
+    datetime: string,
+}
+

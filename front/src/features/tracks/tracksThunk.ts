@@ -1,5 +1,5 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import {ITrack, ITrackHistory, ITrackWithId} from "../../types";
+import {IHistory, ITrack, ITrackHistory, ITrackWithId} from "../../types";
 import axiosApi from "../../axiosApi";
 import {RootState} from "../../app/store";
 
@@ -23,6 +23,20 @@ export const addTrackHistory = createAsyncThunk<ITrackHistory, ITrackWithId, {st
         try {
             const response = await axiosApi.post<ITrackHistory>('/track_history', track, {
                 headers: {'Authorization': token}
+            });
+            return response.data;
+        } catch (e) {
+            throw e;
+        }
+    }
+);
+
+export const fetchHistory = createAsyncThunk<IHistory[], string, { state: RootState }>(
+    'tracks/fetchHistory',
+    async (token) => {
+        try {
+            const response = await axiosApi.get<IHistory[]>('/track_history', {
+                headers: { 'Authorization': token }
             });
             return response.data;
         } catch (e) {
